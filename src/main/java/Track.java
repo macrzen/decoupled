@@ -54,8 +54,6 @@ public class Track extends Group {
 
     private Map<Car, ArrayList<Location>> carVisitedLocations; // cars that have been to location , one for every car
 
-    // private Map<Location, Car> locationCarMap; // current car at ___ location
-
     /**
      * Initializes the collections for locations and cars.
      */
@@ -63,11 +61,9 @@ public class Track extends Group {
         locations = new ArrayList<>();
         cars = new ArrayList<>();
         carVisitedLocations = new HashMap<>();
-        // locationCarMap = new HashMap<>();
         carStartLocation = new HashMap<>();
         carEndLocation = new HashMap<>();
         carCurrentLocation = new HashMap<>();
-        // this.setOnKeyPressed(race);
     }
 
     /**
@@ -78,28 +74,17 @@ public class Track extends Group {
      * @param sceneY     The height of the main Screen from View.
      */
     public void setTrack(int numPlayers, double offset, double sceneX, double sceneY) {
-        // TODO: decide if the "offset" should be taken in as a parameter for modularity
-
-        // offset is sizes the locations and the cars it has an arbitrary size, and can be changed
         Random rand = new Random();
-
         // for the number of players, number of locations changes, the addition of 2 or 3 extra locations is arbitrary
         int numLocation = (numPlayers & 1) == 1 ? numPlayers + 2 : numPlayers + 3;
-
         createLocations(numLocation, offset, sceneX, sceneY, rand);
         createCars(numPlayers, offset, rand);
-
         activeCar = cars.get(0);
         activeCar.setVisible(true);
-
         carStartLocation.get(activeCar).setActive(false, false);
-        // System.out.println("Active Car: " + activeCar.getIdentifier() + "\n\n");
-
         for (Location location : locations)
             if (carEndLocation.get(activeCar).equals(location))
                 location.setActive(false, true);
-        // System.out.println(location.toString());
-
         setGridPane(sceneX, sceneY);
     }
 
@@ -147,7 +132,6 @@ public class Track extends Group {
         ArrayList<Location> forStart = new ArrayList<>();
         ArrayList<Location> forEnd = new ArrayList<>();
         for (int j = 0; j < numPlayers; j++) {
-            // carVisitedLocations.add(new ArrayList<Location>());
             Location start = locations.get(rand.nextInt(locations.size()));
             Location end = locations.get(rand.nextInt(locations.size()));
             while (forStart.contains(start)) start = locations.get(rand.nextInt(locations.size()));
@@ -162,13 +146,11 @@ public class Track extends Group {
             carCurrentLocation.put(tempCar, start);
             cars.get(j).setVisible(false);
             carVisitedLocations.get(tempCar).add(start);
-//            locationCarMap.put(start, tempCar);
-            this.getChildren().add(cars.get(j));           //            cars.get(j).setOnKeyPressed(race);
+            this.getChildren().add(cars.get(j));
         }
     }
 
     /**
-     * TODO: Consider if this makes sense.
      * Creates the grid-pane for the game stats.
      *
      * @param sceneX Reference to the scene's width. Needed for alignment.
@@ -273,7 +255,6 @@ public class Track extends Group {
         }
         int finished = 0;
         for (Car c : cars) if (carVisitedLocations.get(c).size() == locations.size()) finished++;
-        // System.out.println(finished);
         if (finished == cars.size()) {
             for (Location local : locations) local.setVisible(false);
             Car car = cars.get(0);
@@ -295,15 +276,4 @@ public class Track extends Group {
         }
         // for (Location location : locations) System.out.println(location.toString());
     };
-
-
-//    private EventHandler<KeyEvent> race = keyEvent -> {
-//        System.out.println(keyEvent.getCode());
-//        if (keyEvent.getCode() == KeyCode.getKeyCode("K")) activeCar.setSpeed(0,1);
-//        if (keyEvent.getCode() == KeyCode.getKeyCode("I")) activeCar.setSpeed(0,-1);
-//        if (keyEvent.getCode() == KeyCode.getKeyCode("J")) activeCar.setSpeed(-1,0);
-//        if (keyEvent.getCode() == KeyCode.getKeyCode("L")) activeCar.setSpeed(1,0);
-//    };
-
-
 }
