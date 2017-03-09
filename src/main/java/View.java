@@ -149,7 +149,7 @@ public class View extends Application {
             comboBox.setDisable(true);
             button.setDisable(true);
             int i = comboBox.getValue() != null ? comboBox.getValue() : 2;
-            track.setTrack(i, 42, scene.getWidth(), scene.getHeight());
+            track.setTrack(i, 64, scene.getWidth(), scene.getHeight());
             scene.setRoot(track);
             restartButton = new Button("Restart");
             restartButton.setOnMouseClicked(restart);
