@@ -6,6 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
 
+
 /**
  * TODO: Modify calculation of time.
  * Creates a model for the representation of a car.
@@ -18,6 +19,15 @@ public class Car extends Rectangle {
      * TODO: Create relationships between them and how fast a car travels over distance.
      */
     private int engine, suspension, boost, weight;
+
+    private double speed = 30;
+
+    public void setSpeed(int x, int y) {
+        if (x == -1) this.setX(this.getX()-speed);
+        if (x == 1) this.setX(this.getX() + speed);
+        if (y == -1) this.setY(this.getY() - speed);
+        if (y == 1) this.setY(this.getY() + speed);
+    }
 
     /** TODO: Turbo boost?? */
     private boolean isBoosted;
